@@ -1,0 +1,33 @@
+{
+  "name": "rn-jest-gen",
+  "version": "1.0.0",
+  "description": "RN + TypeScript + Jest Unit test cases generator",
+  "main": "index.js",
+  "repository": "https://github.com/sur950/rn-jest-gen.git",
+  "author": "Suresh Konakanchi",
+  "license": "MIT",
+  "files": [
+    "generators"
+  ],
+  "keywords": [
+    "yeoman-generator",
+    "rn test cases",
+    "jest",
+    "jest test cases",
+    "react native jest",
+    "test generator"
+  ],
+  "devDependencies": {
+    "@faker-js/faker": "^7.5.0",
+    "fs": "^0.0.1-security",
+    "fs-readdir-recursive": "^1.1.0",
+    "path": "^0.12.7",
+    "prettier": "^2.7.1",
+    "prop-types": "^15.8.1",
+    "react": "^18.2.0",
+    "react-docgen": "^5.4.3",
+    "react-native": "^0.70.1",
+    "yeoman-generator": "^5.7.0",
+    "yosay": "^2.0.2"
+  }
+}
