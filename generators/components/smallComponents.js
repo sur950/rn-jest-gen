@@ -1,14 +1,13 @@
-var debug = require("debug");
+const debug = require("debug");
 
 const log = debug("generator-rn-jest-gen:log");
-const error = debug("generator-rn-jest-gen:error");
 
 const _extends =
   Object.assign ||
   function (target) {
-    for (var i = 1; i < arguments.length; i++) {
-      var source = arguments[i];
-      for (var key in source) {
+    for (let i = 1; i < arguments.length; i++) {
+      let source = arguments[i];
+      for (let key in source) {
         if (Object.prototype.hasOwnProperty.call(source, key)) {
           target[key] = source[key];
         }
@@ -18,12 +17,12 @@ const _extends =
   };
 
 const filenameFromPath = (filePath) => {
-  log("filenameFromPath ", filePath);  
-  let filePathNoExtension = '';
-  if(filePath.includes('.tsx')){
-    filePathNoExtension = filePath.split('.tsx');
-  }else{
-    filePathNoExtension = filePath.split('.ts');
+  log("filenameFromPath ", filePath);
+  let filePathNoExtension = "";
+  if (filePath.includes(".tsx")) {
+    filePathNoExtension = filePath.split(".tsx");
+  } else {
+    filePathNoExtension = filePath.split(".ts");
   }
   const filePathNoExtensionArray = filePathNoExtension[0].split("/");
   const filename =
@@ -34,6 +33,7 @@ const filenameFromPath = (filePath) => {
 const generateFakeProp = ({ propName, value, raw }) => {
   let name = value;
   const isShape = typeof value === "object";
+
   if (isShape) {
     const fakeShape = {};
     Object.keys(value).forEach((shapeChildName) => {
@@ -48,6 +48,7 @@ const generateFakeProp = ({ propName, value, raw }) => {
     });
     return { propName, name, value: fakeShape };
   }
+
   switch (value) {
     case "number":
       return { name, value: 42 };
@@ -89,13 +90,13 @@ const generateFakeProp = ({ propName, value, raw }) => {
 };
 
 const combinations = (propsOptArr) => {
-  var combResultArr = [];
-  var combTempArr = [];
-  var propsOptArrLen = Math.pow(2, propsOptArr.length);
+  let combResultArr = [];
+  let combTempArr = [];
+  const propsOptArrLen = Math.pow(2, propsOptArr.length);
 
-  for (var i = 0; i < propsOptArrLen; i++) {
+  for (let i = 0; i < propsOptArrLen; i++) {
     combTempArr = [];
-    for (var j = 0; j < propsOptArr.length; j++) {
+    for (let j = 0; j < propsOptArr.length; j++) {
       if (i & Math.pow(2, j)) {
         combTempArr = [...combTempArr, propsOptArr[j]];
       }

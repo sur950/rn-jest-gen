@@ -65,7 +65,11 @@ const addConfigFile = async(dirPath) => {
   displayName: {
     name: '${packageJsonFile.name}',
     color: 'blue',
-  }
+  },
+  moduleNameMapper: {
+    '\\.(jpg|jpeg|png|svg|gif|eot|otf|webp|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$':
+      '<rootDir>/__mocks__/ImageMock.js',
+  },
 };`,
       'utf-8');
     } catch(err) {
@@ -82,14 +86,14 @@ const checkConfigExists = async(dirPath) => {
   if(!configExistsRes) {
     try{
         await addConfigFile(dirPath);
-        console.log('Added jest.config.js');
+        console.log('🚀 Added jest.config.js');
     }
     catch(err) {
         console.log('error', err);
     }
   }
   else {
-    console.log('jest.config.js already exists');
+    console.log('📝 jest.config.js already exists');
   }
 };
 

@@ -1,38 +1,39 @@
 "use strict";
-var Generator = require("yeoman-generator");
-var yosay = require("yosay");
-var fs = require("fs");
-var path = require("path");
-var read = require("fs-readdir-recursive");
-var reactDocs = require("react-docgen");
-var debug = require("debug");
+const Generator = require("yeoman-generator");
+const yosay = require("yosay");
+const fs = require("fs");
+const path = require("path");
+const read = require("fs-readdir-recursive");
+const reactDocs = require("react-docgen");
+const debug = require("debug");
 const prettier = require("prettier");
 const { checkConfigExists } = require("../../bin/scripts/checkInitialConfig");
 const { checkSetupExists } = require("../../bin/scripts/checkInitialSetup");
+const { checkMockExists } = require("../../bin/scripts/imageMock");
 const { propsExtraction } = require("../components/propsExtraction");
 const { _extends, filenameFromPath } = require("../components/smallComponents");
 
-const log = debug("generator-rn-jest-gen:log");
 const error = debug("generator-rn-jest-gen:error");
 
 const extractDefaultProps = (filePath, currentFilePath) => {
   const filename = filenameFromPath(filePath);
   const fileString = fs.readFileSync(filePath, "utf8");
+  let compInfo;
   try {
-    var componentInfo = reactDocs.parse(
+    compInfo = reactDocs.parse(
       fileString,
       reactDocs.resolver.findAllComponentDefinitions,
       reactDocs.handlers.propTypesHandler
     );
   } catch (err) {
-    console.log(filePath, "is not a React Component, ");
+    console.log("🔨 ", filePath, "is not a React Component");
     throw new Error(err);
   }
   const returnObj = propsExtraction(
     filePath,
     currentFilePath,
     filename,
-    componentInfo
+    compInfo
   );
   return returnObj;
 };
@@ -55,12 +56,13 @@ module.exports = class extends Generator {
       hide: false,
     });
   }
+
   prompting() {
     if (this.options.template.length) {
       this.log(`Received custom template of: ${this.options.template}`);
     }
     this.log(yosay("Create RN tests"));
-    var prompts = [
+    const prompts = [
       {
         type: "input",
         name: "COMPONENTS_PATH",
@@ -78,9 +80,12 @@ module.exports = class extends Generator {
       );
     }
   }
+
   writing() {
-    const filePaths = read(this.props.COMPONENTS_PATH).filter((filename) =>
-      filename.endsWith(".tsx")||filename.endsWith(".ts")
+    const filePaths = read(this.props.COMPONENTS_PATH).filter(
+      (filename) =>
+        !(filename.endsWith(".test.tsx") || filename.endsWith(".test.ts")) &&
+        (filename.endsWith(".tsx") || filename.endsWith(".ts"))
     );
     if (filePaths.length === 0) {
       const noJsMessage = "Did not find any .tsx or .ts files";
@@ -88,8 +93,8 @@ module.exports = class extends Generator {
       error(noJsMessage);
     }
     const metadata = [];
-    for (let i = 0; i < filePaths.length; i += 1) {
-      const currentFilePath = filePaths[i];
+    for (const element of filePaths) {
+      const currentFilePath = element;
       const completeFilePath = this.props.COMPONENTS_PATH + currentFilePath;
       try {
         const componentInfo = extractDefaultProps(
@@ -99,7 +104,7 @@ module.exports = class extends Generator {
         metadata.push(componentInfo);
       } catch (err) {
         error(
-          "Couldnt extractDefaultProps from " +
+          "Couldn't extract Default Props from " +
             currentFilePath +
             " at " +
             completeFilePath
@@ -115,10 +120,11 @@ module.exports = class extends Generator {
       if (setupPath && setupPath.length) {
         await checkConfigExists(setupPath);
         await checkSetupExists(setupPath);
+        await checkMockExists(setupPath);
       }
     })();
-    for (let i = 0; i < metadata.length; i += 1) {
-      const compMetaData = metadata[i];
+    for (const element of metadata) {
+      const compMetaData = element;
       const testPath = path.resolve(
         compMetaData.filePath,
         path.join("..", "__tests__", compMetaData.filename + ".test.ts")
@@ -135,9 +141,9 @@ module.exports = class extends Generator {
       );
       try {
         const generatedTestCode = this.fs.read(testPath);
-        var newData = generatedTestCode.split('\n')
-        newData.splice(11,1)
-        var finalData = newData.join('\n');
+        let newData = generatedTestCode.split("\n");
+        newData.splice(11, 1);
+        let finalData = newData.join("\n");
         const formattedTestCode = this.options.prettify
           ? prettier.format(finalData, {
               singleQuote: true,

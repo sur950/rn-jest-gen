@@ -186,14 +186,14 @@ const checkSetupExists = async(dirPath) => {
     if(!setupExistsRes) {
         try {
             await addSetupFile(dirPath);
-            console.log('Added jest.setup.js');
+            console.log('🚀 Added jest.setup.js');
         }
         catch(err) {
             console.log('error', err);
         }
     }
     else {
-        console.log('jest.setup.js already exists');
+        console.log('📝 jest.setup.js already exists');
     }
 }
 

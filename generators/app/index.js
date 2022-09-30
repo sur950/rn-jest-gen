@@ -1,12 +1,10 @@
 'use strict';
-var yeoman = require('yeoman-generator');
-var chalk = require('chalk');
-var yosay = require('yosay');
-// var actionNameCreator = require("../../helpers/actionNameCreator");
+const yeoman = require('yeoman-generator');
+const yosay = require('yosay');
 
 module.exports = yeoman.Base.extend({
   prompting: function () {
-    // Have Yeoman greet the user.
+    // Yeoman Greet message to user
     this.log(yosay(
       `Welcome to RN Test Case Generator`
     ));

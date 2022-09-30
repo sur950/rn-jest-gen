@@ -1,7 +1,6 @@
-var debug = require("debug");
+const debug = require("debug");
 const { combinations, generateFakeProp } = require("./smallComponents");
 
-const log = debug("generator-rn-jest-gen:log");
 const error = debug("generator-rn-jest-gen:error");
 
 const propsExtraction = (
@@ -72,7 +71,7 @@ const propsExtraction = (
       error(
         "!!! Will try to generate fake data this might cause unexpected results !!!"
       );
-      const { flowType, required, description } = componentInfo[0].props[item];
+      const { flowType, required } = componentInfo[0].props[item];
       const { name } = flowType;
       let raw = `PropTypes.${name}`;
       const fakeProp = generateFakeProp({ item, name, raw });

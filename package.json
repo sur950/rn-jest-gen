@@ -1,6 +1,6 @@
 {
-  "name": "rn-jest-gen",
-  "version": "1.0.0",
+  "name": "generator-rn-jest-gen",
+  "version": "1.0.1",
   "description": "RN + TypeScript + Jest Unit test cases generator",
   "main": "index.js",
   "repository": "https://github.com/sur950/rn-jest-gen.git",
