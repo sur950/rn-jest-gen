@@ -15,7 +15,7 @@ First, install [Yeoman](http://yeoman.io) and [rn-jest-gen](https://github.com/s
 
 ```js
 npm install -g yo
-npm install rn-jest-gen
+npm install generator-rn-jest-gen
 ```
 
 ## Commands
@@ -40,7 +40,6 @@ To Generate test file with debugger :
 
 ```js
 DEBUG=generator-rn-jest-gen* yo rn-jest-gen:test
-// Prefix "generator-rn-jest-gen*" is needed for debug mode
 ```
 
 ```bash
