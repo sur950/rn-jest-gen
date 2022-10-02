@@ -15,7 +15,7 @@ First, install [Yeoman](http://yeoman.io) and [rn-jest-gen](https://github.com/s
 
 ```js
 npm install -g yo
-npm install generator-rn-jest-gen
+npm install -D generator-rn-jest-gen
 ```
 
 ## Commands

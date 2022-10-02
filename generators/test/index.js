@@ -7,9 +7,9 @@ const read = require("fs-readdir-recursive");
 const reactDocs = require("react-docgen");
 const debug = require("debug");
 const prettier = require("prettier");
-const { checkConfigExists } = require("../../bin/scripts/checkInitialConfig");
-const { checkSetupExists } = require("../../bin/scripts/checkInitialSetup");
-const { checkMockExists } = require("../../bin/scripts/imageMock");
+const { checkConfigExists } = require("../scripts/checkInitialConfig");
+const { checkSetupExists } = require("../scripts/checkInitialSetup");
+const { checkMockExists } = require("../scripts/imageMock");
 const { propsExtraction } = require("../components/propsExtraction");
 const { _extends, filenameFromPath } = require("../components/smallComponents");
 
